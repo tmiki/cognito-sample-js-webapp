@@ -1,0 +1,30 @@
+{
+  "name": "cognito-sample-js-webapp-1",
+  "version": "1.0.0",
+  "description": "A sample web application to grasp Cognito UserPool with AWS SDK for JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --host 0.0.0.0 --colors --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "author": "tmiki",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^1.0.1",
+    "json-loader": "^0.5.7",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "amazon-cognito-identity-js": "^3.0.3",
+    "aws-amplify": "^1.1.10",
+    "aws-sdk": "^2.354.0"
+  }
+}

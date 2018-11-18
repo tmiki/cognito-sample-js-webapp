@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-pink.min.css" /> 
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&amp;subset=japanese" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <title>Cognito UserPool exercise</title>
+</head>
+<body>
+  <div class="mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Cognito User Pool exercise (This nav bar doesn't work currently.)</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation -->
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="" onClick="return false;">Sign Up</a>
+          <a class="mdl-navigation__link" href="" onClick="return false;">Login</a>
+          <a class="mdl-navigation__link" href="" onClick="return false;">About</a>
+        </nav>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Cognito User Pool exercise</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="" onClick="return false;">Sign Up</a>
+        <a class="mdl-navigation__link" href="" onClick="return false;">Login</a>
+        <a class="mdl-navigation__link" href="" onClick="return false;">About</a>
+      </nav>
+    </div>
+
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="input-username">
+              <label class="mdl-textfield__label" for="input-username">Username...</label>
+          </div>
+      
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="password" id="input-password">
+              <label class="mdl-textfield__label" for="input-password">Password...</label>
+          </div>
+
+           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="input-verification-code">
+              <label class="mdl-textfield__label" for="input-verification-code">Verification code...</label>
+          </div>
+      
+      
+           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="input-email">
+              <label class="mdl-textfield__label" for="input-email">email address...</label>
+          </div>
+        </div>
+  
+        <div class="mdl-cell mdl-cell--12-col">
+          <button id="sign-up-button" class="mdl-button mdl-js-button mdl-button--raised md-js-ripple-effect mdl-button--accent">Sign Up</button>
+          <button id="verify-code-button" class="mdl-button mdl-js-button mdl-button--raised md-js-ripple-effect mdl-button--accent">Verify Your Code</button>
+          <button id="resend-confirmation-by-email-button" class="mdl-button mdl-js-button mdl-button--raised md-js-ripple-effect mdl-button--accent">Resend confirmation by Email</button>
+          <button id="login-button" class="mdl-button mdl-js-button mdl-button--raised md-js-ripple-effect mdl-button--accent">Login</button>
+          <button id="logout-button" class="mdl-button mdl-js-button mdl-button--raised md-js-ripple-effect mdl-button--accent">Logout</button>
+        </div>
+     
+        <div class="mdl-cell mdl-cell--12-col">
+          <div id="message-area"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+<script src="bundle.js"></script>
+</html>
+
