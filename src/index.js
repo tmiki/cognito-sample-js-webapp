@@ -298,6 +298,7 @@ function loginUser(){
       _putMessage("Login succeeded!\n");
       _appendMessage("\naccessToken: " + accessToken);
 
+     _initCognitoUser();
     },
     onFailure: (err) => {
       console.log("err: ", err);
