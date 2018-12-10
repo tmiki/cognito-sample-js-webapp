@@ -361,8 +361,13 @@ function getAWSCredentials(){
       gAppendMessage("\n" + "refreshing has succeeded.");
 
       const identityId = AWS.config.credentials.identityId;
+      const credentials = AWS.config.credentials;
       console.log("identityId: " + identityId);
+      console.log(AWS.config.credentials)
       gAppendMessage("\n" + "identityId: " + identityId);
+      gAppendMessage("\n" + "accessKeyId: " + credentials.accessKeyId);
+      gAppendMessage("\n" + "secretAccessKey: " + credentials.secretAccessKey);
+      gAppendMessage("\n" + "sessionToken: " + credentials.sessionToken);
     });
   });
 
