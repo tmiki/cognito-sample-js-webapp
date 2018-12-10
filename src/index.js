@@ -19,8 +19,11 @@ const POOL_DATA = {
 const IDENTITY_POOL_ID = 'ap-northeast-1:9d83eb8a-e9ed-41e6-83d7-1a5d23d31de1';
 const LOGINS_KEY = 'cognito-idp.' + REGION + '.amazonaws.com/' + POOL_DATA.UserPoolId;
 
-var cognitoUserPool;
-var cognitoUser;
+var gCognitoUserPool;
+var gCognitoUser;
+var gAccessToken;
+var gIdToken;
+var gRefreshToken;
 
 // ------------------------------------------------------------
 // Utility functions.
@@ -45,33 +48,42 @@ function _appendMessage(message) {
 };
 
 function _initCognitoUser() {
-  cognitoUserPool = new AmazonCognitoIdentity.CognitoUserPool(POOL_DATA);
-  console.log(cognitoUserPool);
+  gCognitoUserPool = new AmazonCognitoIdentity.CognitoUserPool(POOL_DATA);
+  console.log(gCognitoUserPool);
 
-  cognitoUser = cognitoUserPool.getCurrentUser();
-  console.log(cognitoUser);
+  gCognitoUser = gCognitoUserPool.getCurrentUser();
+  console.log(gCognitoUser);
 
-  if (cognitoUser === null) {
+  if (gCognitoUser === null) {
     console.log("nobody logged in.");
     return;
   };
 
-  cognitoUser.getSession((err, session) => {
+  gCognitoUser.getSession((err, session) => {
+    // check whether your session is valid and output the result.
     if (err) {
       console.log("getSession: err: " + JSON.stringify(err));
       _putMessage("getSession: err: " + JSON.stringify(err));
       return;
     }
     console.log('session validity: ' + session.isValid());
-    // console.log('session: ' + JSON.stringify(session));
+    _putMessage('session validity: ' + session.isValid() + "\n");
+    // _appendMessage('session: ' + JSON.stringify(session));
+    console.log(session);
 
-    cognitoUser.getUserAttributes((err, attributes) => {
+    // get each tokens and store them into global variables.
+    gAccessToken = session.getAccessToken();
+    gIdToken = session.getIdToken();
+    gRefreshToken = session.getRefreshToken();
+
+    // get and show user attributes.
+    gCognitoUser.getUserAttributes((err, attributes) => {
       if (err) {
         console.log("getUserAttributes: err: " + JSON.stringify(err));
-        _putMessage("getUserAttributes: err: " + JSON.stringify(err));
+        _appendMessage("getUserAttributes: err: " + JSON.stringify(err));
       } else {
         console.log("attributes: " + JSON.stringify(attributes));
-        _putMessage("attributes: " + JSON.stringify(attributes));
+        _appendMessage("attributes: " + JSON.stringify(attributes));
       };
 
     });
@@ -84,17 +96,17 @@ function _updateShowingState() {
   var loginStateText = document.getElementById("state-login-status").innerText;
   var loginUsernameText = document.getElementById("state-login-username").innerText;
 
-  if(cognitoUser === null) {
+  if(gCognitoUser === null) {
     document.getElementById("state-login-status").innerText = "not logged in";
     return;
   }
 
   document.getElementById("state-login-status").innerText = "logged in";
-  document.getElementById("state-login-username").innerText = cognitoUser.username;
+  document.getElementById("state-login-username").innerText = gCognitoUser.username;
 
-//  const accessToken = cognitoUser.getAccessToken();
-//  const idToken = cognitoUser.getIdToken();
-//  const refreshToken = cognitoUser.getRefreshToken();
+  document.getElementById("state-access-token").innerText = JSON.stringify(gAccessToken) + "\n";
+  document.getElementById("state-id-token").innerText = JSON.stringify(gIdToken) + "\n";
+  document.getElementById("state-refresh-token").innerText = JSON.stringify(gRefreshToken) + "\n";
 
 };
 
@@ -128,7 +140,7 @@ function userSignUp() {
 
   userAttributeList.push(attributeEmail);
 
-  cognitoUserPool.signUp(inputData.username, inputData.password, userAttributeList, null, function(err, result) {
+  gCognitoUserPool.signUp(inputData.username, inputData.password, userAttributeList, null, function(err, result) {
     console.log("err: ", err);
     console.log("result: ", result);
 
@@ -140,10 +152,10 @@ function userSignUp() {
     }
 
     // Registration succeeded.
-    cognitoUser = result.user;
+    gCognitoUser = result.user;
 
-    console.log('registered user name is ' + cognitoUser.getUsername());
-    _putMessage('User registration has finished successfully.\n' + 'Registered user name is ' + cognitoUser.getUsername());
+    console.log('registered user name is ' + gCognitoUser.getUsername());
+    _putMessage('User registration has finished successfully.\n' + 'Registered user name is ' + gCognitoUser.getUsername());
   });
 
   console.log("A function " + userSignUp.name + " has finished.");
@@ -157,7 +169,7 @@ function verifyCode(){
 
   const userData = {
     Username: inputData.username,
-    Pool: cognitoUserPool
+    Pool: gCognitoUserPool
   };
 
   const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -183,7 +195,7 @@ function resendConfirmationByEmail(){
 
   const userData = {
     Username: inputData.username,
-    Pool: cognitoUserPool
+    Pool: gCognitoUserPool
   };
 
   const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -209,7 +221,7 @@ function resetPassword(){
 
   const userData = {
     Username: inputData.username,
-    Pool: cognitoUserPool
+    Pool: gCognitoUserPool
   };
 
   const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -253,7 +265,7 @@ function confirmPassword(){
 
   const userData = {
     Username: inputData.username,
-    Pool: cognitoUserPool
+    Pool: gCognitoUserPool
   };
 
   const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -284,16 +296,16 @@ function loginUser(){
   const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
   const userData = {
     Username: inputData.username,
-    Pool: cognitoUserPool
+    Pool: gCognitoUserPool
   };
 
-  // override the global variable "cognitoUser" object.
-  cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+  // override the global variable "gCognitoUser" object.
+  gCognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
-  cognitoUser.authenticateUser(authenticationDetails, {
+  gCognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: (result) => {
       console.log("result: ", result);
-      console.log("cognitoUser: ", cognitoUser);
+      console.log("gCognitoUser: ", gCognitoUser);
       const accessToken = result.getAccessToken().getJwtToken();
       _putMessage("Login succeeded!\n");
       _appendMessage("\naccessToken: " + accessToken);
@@ -317,7 +329,7 @@ function getAWSCredentials(){
   console.log("inputData: " + JSON.stringify(inputData));
 
   // retrieve current session
-  cognitoUser.getSession((err, session) => {
+  gCognitoUser.getSession((err, session) => {
     if (err) {
       console.log("getSession: err: " + JSON.stringify(err));
       return;
@@ -358,11 +370,11 @@ function getAWSCredentials(){
 };
 
 function logoutUser(){
-  cognitoUser.signOut();
-  console.log(cognitoUser);
+  gCognitoUser.signOut();
+  console.log(gCognitoUser);
 
   _putMessage("Signing out has been finished.");
-  _appendMessage("\n" + "cognitoUser: " + JSON.stringify(cognitoUser));
+  _appendMessage("\n" + "gCognitoUser: " + JSON.stringify(gCognitoUser));
 };
 
 
