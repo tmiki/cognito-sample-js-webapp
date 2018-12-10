@@ -11,12 +11,12 @@ require('amazon-cognito-js');
 // ------------------------------------------------------------
 // Global variables
 // ------------------------------------------------------------
-const REGION = 'ap-northeast-1';
+const REGION = '** place your region name in string. **';
 const POOL_DATA = {
-  UserPoolId: 'ap-northeast-1_6Z1yvHL9b',
-  ClientId: 'jerk5a5h1ca9j6ku74pf4m7c7'
+  UserPoolId: '** place your Pool Id. **',
+  ClientId: '** place your App Client Id. **'
 };
-const IDENTITY_POOL_ID = 'ap-northeast-1:9d83eb8a-e9ed-41e6-83d7-1a5d23d31de1';
+const IDENTITY_POOL_ID = '** place your Cognito Identity Pool Id **';
 const LOGINS_KEY = 'cognito-idp.' + REGION + '.amazonaws.com/' + POOL_DATA.UserPoolId;
 
 var gCognitoUserPool;
