@@ -77,13 +77,19 @@ const webpackConfig = {
 ```
 
 ### Run the webpack-dev-server by the npm command
-Once you perform the followin command, the webpack-dev-server run immediately.  
+You have to install node modules at first.
+
+```
+$ npm install
+```
+
+Once you perform the following command, the webpack-dev-server runs immediately.  
 
 ```
 $ npm run start
 ```
 
-### Access by your web browser
+### Access your application by your web browser
 Open up the URL below.  
 
 http://localhost:8123/
