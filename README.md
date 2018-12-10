@@ -29,13 +29,13 @@ You need to have the following items. Make sure to note them.
 ### How to set up your Local environment
 Please ensure that the node.js and npm can be run under your favorable way.  
 
-If you prefer to run them in a Windows environment, I recommend "nvm-windows".
+If you prefer to run them in a Windows environment, I recommend "nvm-windows".  
 https://github.com/coreybutler/nvm-windows
 
-If you prefer to run them in a Linux environment, I recommend "nvm".
+If you prefer to run them in a Linux environment, I recommend "nvm".  
 https://github.com/creationix/nvm
 
-## Running this application
+## Running the application
 ### Change the User Pool/Federated Identities configurations.
 Please place your settings into the index.js.
 
@@ -62,12 +62,22 @@ This application will listen on the port TCP/8123 by default.
 $ vi webpack.config.js
 ```
 
+```
+const webpackConfig = {
+// ** omit ** 
+  devServer: {
+    contentBase: DIR_DIST,
+    host: '0.0.0.0',
+    port: 8123
+  }
+};
+```
+
 ### Run the webpack-dev-server by the npm command
 Once you perform the followin command, the webpack-dev-server run immediately.  
 
 ```
 $ npm run start
-
 ```
 
 ### Access by your web browser
@@ -78,4 +88,6 @@ http://localhost:8123/
 Congratulations!  
 You've run the simple JavaScript app with Cognito User Pool and Federated Identities.
 
+# License
+MIT License
 
