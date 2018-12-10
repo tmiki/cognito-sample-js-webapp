@@ -8,23 +8,23 @@ This project needs an AWS account and a local JavaScript development environment
 
 ### Prerequisite
 
-- AWS environment
--- AWS account
-- Local environment
--- npm 5.6.0 or higher
--- Node v8.11.4 or compatible (Maybe it can run under v6 or v10. But I haven't check whether it can run under them.)
+1. AWS environment
+   * AWS account  
+2. Local environment
+   * npm 5.6.0 or higher  
+   * Node v8.11.4 or compatible (Maybe it can run under v6 or v10. But I haven't check whether it can run under them.)  
 
 ### How to set up your Cognito User Pool
 Create your new User Pool according to the Step 1 of the official document below.  
 https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-integrating-user-pools-javascript.html#tutorial-integrating-user-pools-console-javascript
 
 You need to have the following items. Make sure to note them.  
-- Region Name
-- Cognito User Pool
--- Pool Id
--- App client id
-- Cognito Federated Identities
--- Identity Pool Id
+1. Region Name
+2. Cognito User Pool
+   * Pool Id
+   * App client id
+3. Cognito Federated Identities
+   * Identity Pool Id
 
 ### How to set up your Local environment
 Please ensure that the node.js and npm can be run under your favorable way.  
