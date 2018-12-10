@@ -28,7 +28,7 @@ var gRefreshToken;
 // ------------------------------------------------------------
 // Utility functions.
 // ------------------------------------------------------------
-function _loadInputData() {
+function gLoadInputData() {
   const username = document.getElementById("input-username").value;
   const password = document.getElementById("input-password").value;
   const verificationCode = document.getElementById("input-verification-code").value;
@@ -37,17 +37,17 @@ function _loadInputData() {
   return {username: username, password: password, verificationCode: verificationCode, email: email};
 };
 
-function _putMessage(message) {
+function gPutMessage(message) {
   document.getElementById("message-area").innerText = message;
   return;
 };
 
-function _appendMessage(message) {
+function gAppendMessage(message) {
   document.getElementById("message-area").innerText = document.getElementById("message-area").innerText + message;
   return;
 };
 
-function _initCognitoUser() {
+function gInitCognitoUser() {
   gCognitoUserPool = new AmazonCognitoIdentity.CognitoUserPool(POOL_DATA);
   console.log(gCognitoUserPool);
 
@@ -63,12 +63,12 @@ function _initCognitoUser() {
     // check whether your session is valid and output the result.
     if (err) {
       console.log("getSession: err: " + JSON.stringify(err));
-      _putMessage("getSession: err: " + JSON.stringify(err));
+      gPutMessage("getSession: err: " + JSON.stringify(err));
       return;
     }
     console.log('session validity: ' + session.isValid());
-    _putMessage('session validity: ' + session.isValid() + "\n");
-    // _appendMessage('session: ' + JSON.stringify(session));
+    gPutMessage('session validity: ' + session.isValid() + "\n");
+    // gAppendMessage('session: ' + JSON.stringify(session));
     console.log(session);
 
     // get each tokens and store them into global variables.
@@ -80,10 +80,10 @@ function _initCognitoUser() {
     gCognitoUser.getUserAttributes((err, attributes) => {
       if (err) {
         console.log("getUserAttributes: err: " + JSON.stringify(err));
-        _appendMessage("getUserAttributes: err: " + JSON.stringify(err));
+        gAppendMessage("getUserAttributes: err: " + JSON.stringify(err));
       } else {
         console.log("attributes: " + JSON.stringify(attributes));
-        _appendMessage("attributes: " + JSON.stringify(attributes));
+        gAppendMessage("attributes: " + JSON.stringify(attributes));
       };
 
     });
@@ -92,7 +92,7 @@ function _initCognitoUser() {
 
 };
 
-function _updateShowingState() {
+function gUpdateShowingState() {
   var loginStateText = document.getElementById("state-login-status").innerText;
   var loginUsernameText = document.getElementById("state-login-username").innerText;
 
@@ -115,18 +115,18 @@ function _updateShowingState() {
 // ------------------------------------------------------------
 function userSignUp() {
   console.log("A function " + userSignUp.name + " has started.");
-  _putMessage("");
+  gPutMessage("");
 
-  const inputData = _loadInputData();
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   // validate input values
   if (inputData.username.length < 6){
-    _putMessage('User registration error: too short username. it shoud be greater than 6 characters.');
+    gPutMessage('User registration error: too short username. it shoud be greater than 6 characters.');
     return;
   }
   if (inputData.password.length < 8){
-    _putMessage('User registration error: too short password. it shoud be greater than 8 characters.');
+    gPutMessage('User registration error: too short password. it shoud be greater than 8 characters.');
     return;
   }
 
@@ -146,7 +146,7 @@ function userSignUp() {
 
     // Registration failed.
     if(err){
-      _putMessage('User registration error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
+      gPutMessage('User registration error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
       alert("sorry, your try to sign up has failed.");
       return;
     }
@@ -155,7 +155,7 @@ function userSignUp() {
     gCognitoUser = result.user;
 
     console.log('registered user name is ' + gCognitoUser.getUsername());
-    _putMessage('User registration has finished successfully.\n' + 'Registered user name is ' + gCognitoUser.getUsername());
+    gPutMessage('User registration has finished successfully.\n' + 'Registered user name is ' + gCognitoUser.getUsername());
   });
 
   console.log("A function " + userSignUp.name + " has finished.");
@@ -163,8 +163,8 @@ function userSignUp() {
 
 function verifyCode(){
   console.log("A function " + verifyCode.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   const userData = {
@@ -178,7 +178,7 @@ function verifyCode(){
     console.log("err: ", err);
     console.log("result: ", result);
     if (err) {
-      _putMessage('User verification error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
+      gPutMessage('User verification error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
       alert("sorry, verification has failed.");
       return;
     };
@@ -189,8 +189,8 @@ function verifyCode(){
 
 function resendConfirmationByEmail(){
   console.log("A function " + resendConfirmationByEmail.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   const userData = {
@@ -204,7 +204,7 @@ function resendConfirmationByEmail(){
     console.log("err: ", err);
     console.log("result: ", result);
     if (err) {
-      _putMessage('Resending confirmation code error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
+      gPutMessage('Resending confirmation code error: Cognito has returned the message as follows: \n' + JSON.stringify(err));
       alert("sorry, resending confirmation has failed.");
       return;
     };
@@ -215,8 +215,8 @@ function resendConfirmationByEmail(){
 
 function resetPassword(){
   console.log("A function " + resetPassword.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   const userData = {
@@ -229,13 +229,13 @@ function resetPassword(){
   cognitoUser.forgotPassword({
     onSuccess: (data) => {
       console.log(data);
-      _putMessage("Your password needs resetting and confirming.");
-      _appendMessage("data: " + JSON.stringify(data));
+      gPutMessage("Your password needs resetting and confirming.");
+      gAppendMessage("data: " + JSON.stringify(data));
     },
     onFailure: (err) => {
       console.log(err);
-      _putMessage("Resetting password failed.");
-      _appendMessage("err: " + JSON.stringify(err));
+      gPutMessage("Resetting password failed.");
+      gAppendMessage("err: " + JSON.stringify(err));
     },
     inputVerificationCode: (data) => {
       console.log("Code sent to:" + data);
@@ -244,11 +244,11 @@ function resetPassword(){
       cognitoUser.confirmPassword(verificationCode, newPassword, {
         onSuccess: () => {
           console.log('Password confirmed!');
-          _appendMessage('Resetting password succeeded!');
+          gAppendMessage('Resetting password succeeded!');
         },
         onFailure: (err) => {
           console.log('Password not confirmed!');
-          _appendMessage('Resetting password failed.');
+          gAppendMessage('Resetting password failed.');
         }
       });
     }
@@ -259,8 +259,8 @@ function resetPassword(){
 
 function confirmPassword(){
   console.log("A function " + resetPassword.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   const userData = {
@@ -272,11 +272,11 @@ function confirmPassword(){
   cognitoUser.confirmPassword(inputData.verificationCode, inputData.password, {
     onSuccess: () => {
       console.log('Password confirmed!');
-      _appendMessage('Resetting your password succeeded!');
+      gAppendMessage('Resetting your password succeeded!');
     },
     onFailure: (err) => {
       console.log('Password not confirmed!');
-      _appendMessage('Confirming your verification code or new password failed.');
+      gAppendMessage('Confirming your verification code or new password failed.');
     }
   });
 
@@ -284,8 +284,8 @@ function confirmPassword(){
 
 function loginUser(){
   console.log("A function " + loginUser.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
 
@@ -307,15 +307,15 @@ function loginUser(){
       console.log("result: ", result);
       console.log("gCognitoUser: ", gCognitoUser);
       const accessToken = result.getAccessToken().getJwtToken();
-      _putMessage("Login succeeded!\n");
-      _appendMessage("\naccessToken: " + accessToken);
+      gPutMessage("Login succeeded!\n");
+      gAppendMessage("\naccessToken: " + accessToken);
 
-     _initCognitoUser();
+     gInitCognitoUser();
     },
     onFailure: (err) => {
       console.log("err: ", err);
-      _putMessage("\n" + "login failed.\n");
-      _appendMessage("err: " + JSON.stringify(err));
+      gPutMessage("\n" + "login failed.\n");
+      gAppendMessage("err: " + JSON.stringify(err));
     },
   });
 
@@ -324,8 +324,8 @@ function loginUser(){
 
 function getAWSCredentials(){
   console.log("A function " + getAWSCredentials.name + " has started.");
-  _putMessage("");
-  const inputData = _loadInputData();
+  gPutMessage("");
+  const inputData = gLoadInputData();
   console.log("inputData: " + JSON.stringify(inputData));
 
   // retrieve current session
@@ -354,15 +354,15 @@ function getAWSCredentials(){
     AWS.config.credentials.refresh((err) => {
       if (err){
         console.log(err);
-        _appendMessage("\n" + "refreshing AWS credentials failed. Cognito Identity returns messages as follows: \n" + JSON.stringify(err));
+        gAppendMessage("\n" + "refreshing AWS credentials failed. Cognito Identity returns messages as follows: \n" + JSON.stringify(err));
         return;
       }
 
-      _appendMessage("\n" + "refreshing has succeeded.");
+      gAppendMessage("\n" + "refreshing has succeeded.");
 
       const identityId = AWS.config.credentials.identityId;
       console.log("identityId: " + identityId);
-      _appendMessage("\n" + "identityId: " + identityId);
+      gAppendMessage("\n" + "identityId: " + identityId);
     });
   });
 
@@ -373,8 +373,8 @@ function logoutUser(){
   gCognitoUser.signOut();
   console.log(gCognitoUser);
 
-  _putMessage("Signing out has been finished.");
-  _appendMessage("\n" + "gCognitoUser: " + JSON.stringify(gCognitoUser));
+  gPutMessage("Signing out has been finished.");
+  gAppendMessage("\n" + "gCognitoUser: " + JSON.stringify(gCognitoUser));
 };
 
 
@@ -396,6 +396,6 @@ document.getElementById("logout-button").addEventListener("click", logoutUser);
 // ------------------------------------------------------------
 
 
-_initCognitoUser();
-_updateShowingState();
+gInitCognitoUser();
+gUpdateShowingState();
 
