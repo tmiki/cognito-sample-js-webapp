@@ -1,5 +1,5 @@
 # cognito-sample-js-webapp
-This project is merely for learning purpose about Amazon Cognito Userpool.  
+This project is merely built for learning purpose about Amazon Cognito Userpool.  
 This application depends on the following library.  
 https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js
 
@@ -43,18 +43,19 @@ https://github.com/creationix/nvm
 Please place your settings into the index.js.
 
 ```
-$ vi src/index.js
+$ vi src/global-variables.js
 ```
 
 You can find the following sentences which configure User Pool and Federated Identities.
 ```
-const REGION = '** place your region name in string. **';
-const POOL_DATA = {
+// Those variables should be filled out with your AWS & Cognito User Pool/Federated Identities configurations.
+export const REGION = '** place your region name in string. **';
+export const POOL_DATA = {
   UserPoolId: '** place your Pool Id. **',
   ClientId: '** place your App Client Id. **'
 };
-const IDENTITY_POOL_ID = '** place your Cognito Identity Pool Id **';
-const LOGINS_KEY = 'cognito-idp.' + REGION + '.amazonaws.com/' + POOL_DATA.UserPoolId;
+export const IDENTITY_POOL_ID = '** place your Cognito Identity Pool Id **';
+export const LOGINS_KEY = 'cognito-idp.' + REGION + '.amazonaws.com/' + POOL_DATA.UserPoolId;
 ```
 
 ### Change the Listen port by webpack-dev-server
@@ -96,6 +97,14 @@ http://localhost:8123/
 
 Congratulations!  
 You've run the simple JavaScript app with Cognito User Pool and Federated Identities.
+
+# Further More
+If you want to know how this app works in detail, please refer to the documents below.  
+Unfortunately, those are written in Japanese. sorry for inconvenient.  
+
+https://qiita.com/tmiki/items/f36edc6c7473f5baa398
+
+https://qiita.com/tmiki/items/4e7d5f12e5a044f3837e
 
 # License
 MIT License

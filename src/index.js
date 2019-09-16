@@ -11,13 +11,7 @@ require('amazon-cognito-js');
 // ------------------------------------------------------------
 // Global variables
 // ------------------------------------------------------------
-const REGION = '** place your region name in string. **';
-const POOL_DATA = {
-  UserPoolId: '** place your Pool Id. **',
-  ClientId: '** place your App Client Id. **'
-};
-const IDENTITY_POOL_ID = '** place your Cognito Identity Pool Id **';
-const LOGINS_KEY = 'cognito-idp.' + REGION + '.amazonaws.com/' + POOL_DATA.UserPoolId;
+import {REGION, POOL_DATA, IDENTITY_POOL_ID, LOGIN_KEYS } from './global-variables.js';
 
 var gCognitoUserPool;
 var gCognitoUser;
