@@ -27,6 +27,6 @@
     "amazon-cognito-js": "^1.1.0",
     "aws-amplify": "^1.1.40",
     "aws-sdk": "^2.528.0",
-    "axios": ">=0.18.1"
+    "axios": ">=0.21.1"
   }
 }
